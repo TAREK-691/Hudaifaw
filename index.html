@@ -1,67 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Transparent Login Form</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glass Login</title>
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="style.css">
+<style>
+/* ===== RESET ===== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ===== BACKGROUND ===== */
+body{
+  min-height:100vh;
+  background: linear-gradient(135deg,#667eea,#764ba2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* ===== GLASS CARD ===== */
+.glass{
+  width:100%;
+  max-width:380px;
+  padding:30px;
+  border-radius:16px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border:1px solid rgba(255,255,255,0.3);
+  color:#fff;
+}
+
+/* ===== HEADER ===== */
+.glass h2{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+/* ===== INPUT ===== */
+.field{
+  position:relative;
+  margin-bottom:18px;
+}
+
+.field i{
+  position:absolute;
+  top:50%;
+  left:12px;
+  transform:translateY(-50%);
+  color:#fff;
+}
+
+.field input{
+  width:100%;
+  padding:12px 40px;
+  border:none;
+  outline:none;
+  border-radius:8px;
+  background: rgba(255,255,255,0.2);
+  color:#fff;
+}
+
+.field input::placeholder{
+  color:#eee;
+}
+
+/* SHOW BTN */
+.show{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:12px;
+  cursor:pointer;
+  user-select:none;
+}
+
+/* ===== BUTTON ===== */
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#00e6e6;
+  color:#000;
+  font-weight:600;
+  cursor:pointer;
+}
+
+button:hover{
+  opacity:.9;
+}
+
+/* ===== EXTRA ===== */
+.extra{
+  margin-top:15px;
+  text-align:center;
+  font-size:14px;
+}
+
+.extra a{
+  color:#00e6e6;
+  text-decoration:none;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:420px){
+  .glass{
+    margin:15px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="bg-img">
-    <div class="content">
+<div class="glass">
+  <h2>Login</h2>
 
-      <header>Login Here</header>
-
-      <form action="#">
-        <div class="field">
-          <i class="fa fa-user"></i>
-          <input type="text" placeholder="Enter Email or Phone" required>
-        </div>
-
-        <div class="field space">
-          <i class="fa fa-lock"></i>
-          <input type="password" class="pass-key" placeholder="Enter Password" required>
-          <span class="show">SHOW</span>
-        </div>
-
-        <div class="pass">
-          <a href="#">Forgot Password?</a>
-        </div>
-
-        <div class="field">
-          <input type="submit" value="LOGIN">
-        </div>
-      </form>
-
-      <div class="login">Or login with</div>
-
-      <div class="links">
-        <div class="facebook">
-          <i class="fa fa-facebook"></i>
-          <span>Facebook</span>
-        </div>
-
-        <div class="gmail">
-          <i class="fa fa-envelope"></i>
-          <span>G-Mail</span>
-        </div>
-      </div>
-
-      <div class="signup">
-        Don't have an account? <a href="#">Signup Now</a>
-      </div>
-
-    </div>
+  <div class="field">
+    <i class="fa fa-user"></i>
+    <input type="text" id="email" placeholder="Email or Phone">
   </div>
+
+  <div class="field">
+    <i class="fa fa-lock"></i>
+    <input type="password" id="password" placeholder="Password">
+    <span class="show" onclick="togglePass()">SHOW</span>
+  </div>
+
+  <button onclick="login()">LOGIN</button>
+
+  <div class="extra">
+    <a href="#">Forgot password?</a><br><br>
+    Don't have account? <a href="#">Signup</a>
+  </div>
+</div>
+
+<script>
+// ===== SHOW / HIDE PASSWORD =====
+function togglePass(){
+  const pass = document.getElementById("password");
+  if(pass.type === "password"){
+    pass.type = "text";
+  }else{
+    pass.type = "password";
+  }
+}
+
+// ===== BACKEND LOGIN (FETCH) =====
+function login(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  fetch("/login",{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json"
+    },
+    body: JSON.stringify({ email, password })
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert(data.message);
+  })
+  .catch(err => {
+    alert("Server error");
+  });
+}
+</script>
 
 </body>
 </html>
