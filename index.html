@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 Celebration ✨</title>
+    <title>2026 Journey ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;800&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #00f2ff; --secondary: #7000ff; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            background: radial-gradient(circle at center, #0a0a2e 0%, #000 100%);
-            color: #fff; font-family: 'Poppins', sans-serif; overflow: hidden; height: 100vh;
+            background: #000; color: #fff; 
+            font-family: 'Poppins', sans-serif; overflow: hidden; height: 100vh;
         }
 
         /* Firefly Style */
         .firefly {
-            position: absolute; width: 5px; height: 5px;
+            position: absolute; width: 4px; height: 4px;
             background: var(--primary); border-radius: 50%;
-            filter: blur(1px); box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+            filter: blur(1px); box-shadow: 0 0 10px var(--primary);
             animation: drift linear infinite, flash 2s ease-in-out infinite;
         }
-
         @keyframes drift {
-            from { transform: translateY(100vh) translateX(0); }
+            from { transform: translateY(110vh) translateX(0); }
             to { transform: translateY(-10vh) translateX(100px); }
         }
         @keyframes flash { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
@@ -30,126 +30,155 @@
         .screen {
             position: fixed; inset: 0; display: flex; align-items: center;
             justify-content: center; flex-direction: column;
-            opacity: 0; pointer-events: none; transition: 1.5s ease;
+            opacity: 0; pointer-events: none; transition: 1s ease-in-out;
+            padding: 20px; text-align: center;
         }
         .active { opacity: 1; pointer-events: all; }
 
-        /* Modern Input */
+        /* Input Card */
         .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px); padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px); padding: 40px;
             border-radius: 30px; border: 1px solid rgba(255,255,255,0.1);
-            text-align: center; box-shadow: 0 25px 45px rgba(0,0,0,0.5);
         }
-        h2 { margin-bottom: 10px; font-weight: 400; letter-spacing: 2px; }
         input {
             background: none; border: none; border-bottom: 2px solid var(--primary);
             color: #fff; font-size: 20px; padding: 10px; outline: none; text-align: center; margin: 20px 0;
         }
         .btn {
             background: linear-gradient(45deg, var(--primary), var(--secondary));
-            padding: 12px 40px; border-radius: 50px; border: none;
-            color: white; font-weight: bold; cursor: pointer; transform: scale(1); transition: 0.3s;
-            text-transform: uppercase; letter-spacing: 1px;
+            padding: 12px 35px; border-radius: 50px; border: none;
+            color: white; font-weight: bold; cursor: pointer; transition: 0.3s;
+            text-transform: uppercase;
         }
-        .btn:hover { transform: scale(1.1); box-shadow: 0 0 20px var(--primary); }
 
-        /* Text Effects */
+        /* Reveal & Typography */
         .bold-2026 {
-            font-size: 8vw; font-weight: 900; text-align: center; line-height: 1.1;
-            background: linear-gradient(to bottom, #fff 30%, var(--primary));
+            font-size: 12vw; font-weight: 800; line-height: 1;
+            background: linear-gradient(to bottom, #fff, var(--primary));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 30px rgba(0,242,255,0.5));
         }
-        .caption { 
-            font-size: 26px; font-style: italic; max-width: 700px; 
-            line-height: 1.6; text-align: center; padding: 20px;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        .typewriter {
+            font-size: 24px; font-weight: 300; max-width: 600px;
+            min-height: 1.2em; line-height: 1.6; color: #ddd;
         }
+        .highlight { color: var(--primary); font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div id="firefly-container"></div>
-
     <audio id="bgMusic" loop>
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     </audio>
 
     <div class="screen active" id="step1">
         <div class="glass-card">
-            <h2>The Future Awaits</h2>
-            <input type="text" id="userName" placeholder="Type Your Name">
+            <h2 style="letter-spacing: 3px;">2026 IS CALLING</h2>
+            <input type="text" id="userName" placeholder="Your Name">
             <br>
-            <button class="btn" onclick="nextStep()">Begin Journey</button>
+            <button class="btn" onclick="startExperience()">Open the Door</button>
         </div>
     </div>
 
     <div class="screen" id="step2">
-        <h1 id="cdText" style="font-size: 180px; font-weight: 900; color: var(--primary);"></h1>
+        <h1 id="cdText" style="font-size: 150px; font-weight: 800; color: var(--primary);"></h1>
     </div>
 
     <div class="screen" id="step3">
-        <h1 class="bold-2026">HAPPY NEW YEAR <br> 2026</h1>
+        <h1 class="bold-2026">HAPPY <br> NEW YEAR <br> 2026</h1>
     </div>
 
-    <div class="screen" id="step4">
-        <h3 style="color: var(--primary); letter-spacing: 5px; margin-bottom: 15px;">WELCOME 2026</h3>
-        <p class="caption" id="wishMsg"></p>
-        <button class="btn" style="margin-top: 30px;" onclick="location.reload()">Explore Again ✨</button>
+    <div class="screen" id="captionScreen">
+        <div class="typewriter" id="typewriterText"></div>
     </div>
 
     <script>
+        let userName = "";
+        
         function createFireflies() {
             const container = document.getElementById('firefly-container');
-            for(let i=0; i<60; i++) {
+            for(let i=0; i<50; i++) {
                 let f = document.createElement('div');
                 f.className = 'firefly';
                 f.style.left = Math.random() * 100 + 'vw';
-                f.style.top = Math.random() * 100 + 'vh';
-                f.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                f.style.animationDuration = (Math.random() * 5 + 4) + 's';
                 f.style.animationDelay = Math.random() * 5 + 's';
                 container.appendChild(f);
             }
         }
 
-        function nextStep() {
-            const name = document.getElementById('userName').value;
-            if(!name) return alert("Please enter your name first! 🙂");
+        function typeEffect(elementId, text, speed, callback) {
+            let i = 0;
+            const element = document.getElementById(elementId);
+            element.innerHTML = "";
+            const timer = setInterval(() => {
+                element.innerHTML += text.charAt(i);
+                i++;
+                if (i >= text.length) {
+                    clearInterval(timer);
+                    if (callback) setTimeout(callback, 2500); // Wait before next action
+                }
+            }, speed);
+        }
 
-            // Play Music
-            const music = document.getElementById('bgMusic');
-            music.play().catch(e => console.log("Music blocked by browser."));
+        function startExperience() {
+            userName = document.getElementById('userName').value;
+            if(!userName) return alert("Please tell me your name! ✨");
 
-            // Switch Screen
+            document.getElementById('bgMusic').play();
             document.getElementById('step1').classList.remove('active');
             document.getElementById('step2').classList.add('active');
 
             let count = 3;
             const cd = document.getElementById('cdText');
             cd.innerText = count;
-            
-            let timer = setInterval(() => {
+            const timer = setInterval(() => {
                 count--;
                 cd.innerText = count;
                 if(count === 0) {
                     clearInterval(timer);
-                    showBigReveal(name);
+                    reveal2026();
                 }
             }, 1000);
         }
 
-        function showBigReveal(name) {
+        function reveal2026() {
             createFireflies();
             document.getElementById('step2').classList.remove('active');
             document.getElementById('step3').classList.add('active');
 
-            // After 4 seconds, show final English caption
             setTimeout(() => {
                 document.getElementById('step3').classList.remove('active');
-                document.getElementById('step4').classList.add('active');
-                document.getElementById('wishMsg').innerText = `Hey ${name}, may this year bring you endless joy, success, and beautiful moments. Let your dreams take flight like these fireflies! ✨`;
-            }, 4500);
+                document.getElementById('captionScreen').classList.add('active');
+                startCaptions();
+            }, 4000);
+        }
+
+        function startCaptions() {
+            const messages = [
+                `Hello ${userName}, a brand new chapter has just begun...`,
+                `Leave behind the shadows of 2025 and embrace the light of 2026.`,
+                `May your journey be as bright as these fireflies and your heart full of peace.`,
+                `This is YOUR year to shine. Dream big, work hard, and stay happy! ✨`
+            ];
+
+            let msgIndex = 0;
+
+            function nextMsg() {
+                if (msgIndex < messages.length) {
+                    typeEffect("typewriterText", messages[msgIndex], 50, () => {
+                        msgIndex++;
+                        if (msgIndex < messages.length) {
+                            nextMsg();
+                        } else {
+                            // Final Action: Show Restart Button
+                            document.getElementById('typewriterText').innerHTML += `<br><br><button class="btn" onclick="location.reload()">Re-live the moment</button>`;
+                        }
+                    });
+                }
+            }
+            nextMsg();
         }
     </script>
 </body>
