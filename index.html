@@ -2,53 +2,56 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Just For You ✨</title>
+<title>✨</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{
-  min-height:100vh;
+  height:100vh;
   font-family:'Poppins',sans-serif;
+  background:#000;
+  color:#fff;
   display:flex;
   justify-content:center;
   align-items:center;
-  background:#000;
-  color:white;
   overflow:hidden;
 }
 
-/* Mystery screen */
-.card{
-  background:rgba(255,255,255,0.1);
-  backdrop-filter:blur(15px);
-  padding:40px 25px;
-  border-radius:25px;
-  width:90%;
-  max-width:420px;
+/* screens */
+.screen{
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
   text-align:center;
-  box-shadow:0 20px 40px rgba(0,0,0,.6);
+  padding:30px;
 }
 
-h1{font-size:28px;margin-bottom:10px}
-p{opacity:.85}
+.hidden{display:none}
 
+/* intro */
+#intro h1{font-size:28px}
+#intro p{opacity:.7;margin-top:10px}
+
+/* input */
 input{
-  width:100%;
+  margin-top:20px;
   padding:14px;
-  margin-top:16px;
+  width:260px;
   border:none;
   border-radius:14px;
   font-size:16px;
   outline:none;
+  text-align:center;
 }
 
 button{
   margin-top:18px;
-  padding:14px;
-  width:100%;
+  padding:14px 26px;
   border:none;
   border-radius:14px;
   background:#ff004f;
@@ -58,56 +61,50 @@ button{
   cursor:pointer;
 }
 
-/* Countdown */
-#countdown{
-  position:fixed;
-  inset:0;
-  background:black;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  font-size:120px;
-  font-weight:700;
-  z-index:1000;
+/* loading */
+#loading{
+  font-size:22px;
+  letter-spacing:2px;
+  animation:pulse 1.5s infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:.4}
+  50%{opacity:1}
 }
 
-/* Wish */
+/* countdown */
+#countdown{
+  font-size:120px;
+  font-weight:700;
+}
+
+/* wish */
 #wish{
-  position:fixed;
-  inset:0;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  padding:30px;
   background:linear-gradient(270deg,#0f2027,#203a43,#2c5364,#0f2027);
   background-size:800% 800%;
   animation:bg 12s ease infinite;
 }
-
 @keyframes bg{
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
 }
-
 #wishText{
   font-size:26px;
   font-weight:700;
-  line-height:1.6;
-  max-width:600px;
+  line-height:1.7;
+  max-width:700px;
 }
 
-/* Fireworks */
-.firework{
+/* fireworks */
+.fire{
   position:absolute;
   width:6px;
   height:6px;
   border-radius:50%;
-  animation:explode 1.5s linear infinite;
+  animation:boom 1.5s linear infinite;
 }
-
-@keyframes explode{
+@keyframes boom{
   0%{transform:scale(0);opacity:1}
   100%{transform:scale(6);opacity:0}
 }
@@ -116,77 +113,88 @@ button{
 
 <body>
 
-<div class="card" id="startCard">
-  <h1>✨ Something Special ✨</h1>
-  <p>Enter your name and wait...</p>
+<!-- INTRO -->
+<div class="screen" id="intro">
+  <h1>🖤 Trust Me</h1>
+  <p>Just one step…</p>
   <input id="name" placeholder="Your Name">
   <button onclick="start()">Continue</button>
 </div>
 
-<div id="countdown"></div>
+<!-- LOADING -->
+<div class="screen hidden" id="loading">
+  Preparing something special...
+</div>
 
-<div id="wish">
+<!-- COUNTDOWN -->
+<div class="screen hidden" id="countdown"></div>
+
+<!-- WISH -->
+<div class="screen hidden" id="wish">
   <div id="wishText"></div>
 </div>
 
-<audio id="song" autoplay loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3">
 </audio>
 
 <script>
-let userName="";
+let user="";
 
 function start(){
-  userName=document.getElementById("name").value.trim();
-  if(!userName) return alert("Enter your name 🙂");
+  user=document.getElementById("name").value.trim();
+  if(!user) return alert("Type your name 🙂");
+  intro.classList.add("hidden");
+  loading.classList.remove("hidden");
 
-  document.getElementById("startCard").style.display="none";
-  startCountdown();
+  setTimeout(()=>{
+    loading.classList.add("hidden");
+    startCountdown();
+  },3000);
 }
 
 function startCountdown(){
-  const cd=document.getElementById("countdown");
-  cd.style.display="flex";
+  countdown.classList.remove("hidden");
   let n=10;
-  cd.innerText=n;
+  countdown.innerText=n;
 
-  const timer=setInterval(()=>{
+  const t=setInterval(()=>{
     n--;
-    cd.innerText=n;
+    countdown.innerText=n;
     if(n===0){
-      clearInterval(timer);
-      cd.style.display="none";
-      showWish();
+      clearInterval(t);
+      countdown.classList.add("hidden");
+      reveal();
     }
   },1000);
 }
 
-function showWish(){
-  document.getElementById("song").play();
-  document.getElementById("wish").style.display="flex";
+function reveal(){
+  music.play();
+  wish.classList.remove("hidden");
 
-  const text=`🎆 Happy New Year ${userName}! 🎉
-A new year means a new beginning,
-new dreams, new hope and new success 🌟
-May this year change your life beautifully 💖
-Never stop smiling 🥂✨`;
+  const msg=`🎆 Happy New Year ${user}! 🎉
+
+A new chapter begins tonight.
+Leave the pain, take the lessons.
+This year will change you 🌟
+
+Smile more. Dream bigger.
+You deserve happiness 💖`;
 
   let i=0;
   const box=document.getElementById("wishText");
   const typer=setInterval(()=>{
-    box.innerHTML+=text.charAt(i);
+    box.innerHTML+=msg.charAt(i);
     i++;
-    if(i>=text.length) clearInterval(typer);
+    if(i>=msg.length) clearInterval(typer);
   },40);
 
-  fireworks();
-}
-
-function fireworks(){
   setInterval(()=>{
-    for(let i=0;i<8;i++){
+    for(let i=0;i<10;i++){
       const f=document.createElement("div");
-      f.className="firework";
+      f.className="fire";
       f.style.left=Math.random()*100+"vw";
       f.style.top=Math.random()*100+"vh";
       f.style.background=`hsl(${Math.random()*360},80%,60%)`;
