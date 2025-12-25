@@ -3,183 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 Journey ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;800&display=swap" rel="stylesheet">
+    <title>Infinity Love ✨</title>
     <style>
-        :root { --primary: #00f2ff; --secondary: #7000ff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background: #000; color: #fff; 
-            font-family: 'Poppins', sans-serif; overflow: hidden; height: 100vh;
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-
-        /* Firefly Style */
-        .firefly {
-            position: absolute; width: 4px; height: 4px;
-            background: var(--primary); border-radius: 50%;
-            filter: blur(1px); box-shadow: 0 0 10px var(--primary);
-            animation: drift linear infinite, flash 2s ease-in-out infinite;
+        canvas {
+            display: block;
         }
-        @keyframes drift {
-            from { transform: translateY(110vh) translateX(0); }
-            to { transform: translateY(-10vh) translateX(100px); }
-        }
-        @keyframes flash { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-
-        /* Screens */
-        .screen {
-            position: fixed; inset: 0; display: flex; align-items: center;
-            justify-content: center; flex-direction: column;
-            opacity: 0; pointer-events: none; transition: 1s ease-in-out;
-            padding: 20px; text-align: center;
-        }
-        .active { opacity: 1; pointer-events: all; }
-
-        /* Input Card */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px); padding: 40px;
-            border-radius: 30px; border: 1px solid rgba(255,255,255,0.1);
-        }
-        input {
-            background: none; border: none; border-bottom: 2px solid var(--primary);
-            color: #fff; font-size: 20px; padding: 10px; outline: none; text-align: center; margin: 20px 0;
-        }
-        .btn {
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            padding: 12px 35px; border-radius: 50px; border: none;
-            color: white; font-weight: bold; cursor: pointer; transition: 0.3s;
+        .center-text {
+            position: absolute;
+            color: #ff0055;
+            font-family: 'Arial', sans-serif;
+            font-size: 20px;
+            font-weight: bold;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px #ff0055;
+            pointer-events: none;
+            animation: pulse 1.5s infinite;
         }
-
-        /* Reveal & Typography */
-        .bold-2026 {
-            font-size: 12vw; font-weight: 800; line-height: 1;
-            background: linear-gradient(to bottom, #fff, var(--primary));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
         }
-        .typewriter {
-            font-size: 24px; font-weight: 300; max-width: 600px;
-            min-height: 1.2em; line-height: 1.6; color: #ddd;
-        }
-        .highlight { color: var(--primary); font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div id="firefly-container"></div>
-    <audio id="bgMusic" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
-
-    <div class="screen active" id="step1">
-        <div class="glass-card">
-            <h2 style="letter-spacing: 3px;">2026 IS CALLING</h2>
-            <input type="text" id="userName" placeholder="Your Name">
-            <br>
-            <button class="btn" onclick="startExperience()">Open the Door</button>
-        </div>
-    </div>
-
-    <div class="screen" id="step2">
-        <h1 id="cdText" style="font-size: 150px; font-weight: 800; color: var(--primary);"></h1>
-    </div>
-
-    <div class="screen" id="step3">
-        <h1 class="bold-2026">HAPPY <br> NEW YEAR <br> 2026</h1>
-    </div>
-
-    <div class="screen" id="captionScreen">
-        <div class="typewriter" id="typewriterText"></div>
-    </div>
+    <div class="center-text">I Love You Forever</div>
+    <canvas id="loveCanvas"></canvas>
 
     <script>
-        let userName = "";
-        
-        function createFireflies() {
-            const container = document.getElementById('firefly-container');
-            for(let i=0; i<50; i++) {
-                let f = document.createElement('div');
-                f.className = 'firefly';
-                f.style.left = Math.random() * 100 + 'vw';
-                f.style.animationDuration = (Math.random() * 5 + 4) + 's';
-                f.style.animationDelay = Math.random() * 5 + 's';
-                container.appendChild(f);
+        const canvas = document.getElementById('loveCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = 400; // কতগুলো "I Love You" লেখা থাকবে
+        const textStr = "I Love You";
+
+        // হার্ট শেপের গাণিতিক ফাংশন
+        function getHeartPoint(t) {
+            let x = 16 * Math.pow(Math.sin(t), 3);
+            let y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+            return { x: x * 15, y: y * 15 }; // 15 দিয়ে গুণ করে সাইজ বড় করা হয়েছে
+        }
+
+        class Particle {
+            constructor(t) {
+                this.t = t; // হার্ট শেপের পজিশন প্যারামিটার
+                this.basePos = getHeartPoint(this.t);
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 8 + 5;
+                this.speed = Math.random() * 0.02 + 0.01;
+                this.color = `hsl(${Math.random() * 30 + 330}, 100%, 60%)`; // গোলাপি ও লাল শেড
+                this.offset = Math.random() * 10; // মুভমেন্টের জন্য অফসেট
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.font = `${this.size}px Arial`;
+                ctx.fillText(textStr, this.x, this.y);
+            }
+
+            update() {
+                // হার্ট শেপের টার্গেট পজিশন
+                let targetX = canvas.width / 2 + this.basePos.x;
+                let targetY = canvas.height / 2 + this.basePos.y;
+
+                // হালকা কাঁপাকাঁপি বা রানিং ইফেক্ট যোগ করা
+                targetX += Math.sin(Date.now() * 0.002 + this.offset) * 5;
+                targetY += Math.cos(Date.now() * 0.002 + this.offset) * 5;
+
+                // ধীরলয়ে টার্গেট পজিশনের দিকে নিয়ে যাওয়া (Ease transition)
+                this.x += (targetX - this.x) * 0.05;
+                this.y += (targetY - this.y) * 0.05;
             }
         }
 
-        function typeEffect(elementId, text, speed, callback) {
-            let i = 0;
-            const element = document.getElementById(elementId);
-            element.innerHTML = "";
-            const timer = setInterval(() => {
-                element.innerHTML += text.charAt(i);
-                i++;
-                if (i >= text.length) {
-                    clearInterval(timer);
-                    if (callback) setTimeout(callback, 2500); // Wait before next action
-                }
-            }, speed);
-        }
-
-        function startExperience() {
-            userName = document.getElementById('userName').value;
-            if(!userName) return alert("Please tell me your name! ✨");
-
-            document.getElementById('bgMusic').play();
-            document.getElementById('step1').classList.remove('active');
-            document.getElementById('step2').classList.add('active');
-
-            let count = 3;
-            const cd = document.getElementById('cdText');
-            cd.innerText = count;
-            const timer = setInterval(() => {
-                count--;
-                cd.innerText = count;
-                if(count === 0) {
-                    clearInterval(timer);
-                    reveal2026();
-                }
-            }, 1000);
-        }
-
-        function reveal2026() {
-            createFireflies();
-            document.getElementById('step2').classList.remove('active');
-            document.getElementById('step3').classList.add('active');
-
-            setTimeout(() => {
-                document.getElementById('step3').classList.remove('active');
-                document.getElementById('captionScreen').classList.add('active');
-                startCaptions();
-            }, 4000);
-        }
-
-        function startCaptions() {
-            const messages = [
-                `Hello ${userName}, a brand new chapter has just begun...`,
-                `Leave behind the shadows of 2025 and embrace the light of 2026.`,
-                `May your journey be as bright as these fireflies and your heart full of peace.`,
-                `This is YOUR year to shine. Dream big, work hard, and stay happy! ✨`
-            ];
-
-            let msgIndex = 0;
-
-            function nextMsg() {
-                if (msgIndex < messages.length) {
-                    typeEffect("typewriterText", messages[msgIndex], 50, () => {
-                        msgIndex++;
-                        if (msgIndex < messages.length) {
-                            nextMsg();
-                        } else {
-                            // Final Action: Show Restart Button
-                            document.getElementById('typewriterText').innerHTML += `<br><br><button class="btn" onclick="location.reload()">Re-live the moment</button>`;
-                        }
-                    });
-                }
+        function init() {
+            for (let i = 0; i < particleCount; i++) {
+                // ০ থেকে ২*পাই পর্যন্ত ভ্যালু দিয়ে হার্টের চারপাশ কভার করা
+                let t = Math.random() * Math.PI * 2;
+                particles.push(new Particle(t));
             }
-            nextMsg();
         }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; // ট্রেইল ইফেক্টের জন্য হালকা কালো
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        init();
+        animate();
     </script>
 </body>
 </html>
