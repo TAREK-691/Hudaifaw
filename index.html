@@ -1,165 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>✨ Secret New Year 2026 ✨</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body,html{height:100%;width:100%;overflow:hidden;font-family:'Poppins',sans-serif;background:#000;color:white;}
-.screen{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center;padding:20px;transition:all 1s ease;}
-.hidden{display:none;}
-input{padding:14px 20px;border-radius:12px;border:none;margin-top:20px;font-size:16px;text-align:center;outline:none;}
-button{padding:14px 24px;margin-top:20px;border:none;border-radius:14px;background:#ff004f;color:white;font-weight:700;font-size:16px;cursor:pointer;}
-#countdown{font-size:120px;font-weight:700;}
-#wishText,#captionText{font-size:28px;font-weight:700;line-height:1.6;max-width:700px;}
-.firefly{position:absolute;width:6px;height:6px;border-radius:50%;animation:fireflyAnim 5s linear infinite;}
-@keyframes fireflyAnim{0%{transform:translateY(0) translateX(0);}50%{transform:translateY(-200px) translateX(100px);}100%{transform:translateY(0) translateX(0);}}
-.gradientBg{background:linear-gradient(270deg,#0f2027,#203a43,#2c5364,#0f2027);background-size:800% 800%;animation:bgAnim 12s ease infinite;height:100%;width:100%;display:flex;justify-content:center;align-items:center;flex-direction:column;}
-@keyframes bgAnim{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.confetti{position:absolute;width:8px;height:12px;animation:fall 4s linear infinite;}
-@keyframes fall{0%{transform:translateY(-10vh) rotate(0deg);}100%{transform:translateY(110vh) rotate(360deg);}}
-.typing{border-right:3px solid #fff;animation:blink .7s infinite;} 
-@keyframes blink{0%,100%{border-color:transparent}50%{border-color:#fff}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 Celebration ✨</title>
+    <style>
+        :root { --primary: #00f2ff; --secondary: #7000ff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: radial-gradient(circle at center, #0a0a2e 0%, #000 100%);
+            color: #fff; font-family: 'Poppins', sans-serif; overflow: hidden; height: 100vh;
+        }
+
+        /* Firefly Style */
+        .firefly {
+            position: absolute; width: 5px; height: 5px;
+            background: var(--primary); border-radius: 50%;
+            filter: blur(1px); box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+            animation: drift linear infinite, flash 2s ease-in-out infinite;
+        }
+
+        @keyframes drift {
+            from { transform: translateY(100vh) translateX(0); }
+            to { transform: translateY(-10vh) translateX(100px); }
+        }
+        @keyframes flash { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+        /* Screens */
+        .screen {
+            position: fixed; inset: 0; display: flex; align-items: center;
+            justify-content: center; flex-direction: column;
+            opacity: 0; pointer-events: none; transition: 1.5s ease;
+        }
+        .active { opacity: 1; pointer-events: all; }
+
+        /* Modern Input */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px); padding: 40px;
+            border-radius: 30px; border: 1px solid rgba(255,255,255,0.1);
+            text-align: center; box-shadow: 0 25px 45px rgba(0,0,0,0.5);
+        }
+        h2 { margin-bottom: 10px; font-weight: 400; letter-spacing: 2px; }
+        input {
+            background: none; border: none; border-bottom: 2px solid var(--primary);
+            color: #fff; font-size: 20px; padding: 10px; outline: none; text-align: center; margin: 20px 0;
+        }
+        .btn {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            padding: 12px 40px; border-radius: 50px; border: none;
+            color: white; font-weight: bold; cursor: pointer; transform: scale(1); transition: 0.3s;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn:hover { transform: scale(1.1); box-shadow: 0 0 20px var(--primary); }
+
+        /* Text Effects */
+        .bold-2026 {
+            font-size: 8vw; font-weight: 900; text-align: center; line-height: 1.1;
+            background: linear-gradient(to bottom, #fff 30%, var(--primary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px rgba(0,242,255,0.5));
+        }
+        .caption { 
+            font-size: 26px; font-style: italic; max-width: 700px; 
+            line-height: 1.6; text-align: center; padding: 20px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+    </style>
 </head>
 <body>
 
-<!-- Page 1: Name Input -->
-<div class="screen" id="page1">
-  <h1>🖤 Trust me...</h1>
-  <p>Enter your name to start the surprise</p>
-  <input id="name" placeholder="Your Name">
-  <button onclick="start()">Continue</button>
-</div>
+    <div id="firefly-container"></div>
 
-<!-- Page 2: Countdown -->
-<div class="screen hidden" id="page2">
-  <div id="countdown"></div>
-</div>
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
 
-<!-- Page 3: HAPPY NEW YEAR 2026 -->
-<div class="screen hidden gradientBg" id="page3">
-  <div id="wishText"></div>
-</div>
+    <div class="screen active" id="step1">
+        <div class="glass-card">
+            <h2>The Future Awaits</h2>
+            <input type="text" id="userName" placeholder="Type Your Name">
+            <br>
+            <button class="btn" onclick="nextStep()">Begin Journey</button>
+        </div>
+    </div>
 
-<!-- Page 4: Caption 1 -->
-<div class="screen hidden gradientBg" id="page4">
-  <div id="captionText"></div>
-</div>
+    <div class="screen" id="step2">
+        <h1 id="cdText" style="font-size: 180px; font-weight: 900; color: var(--primary);"></h1>
+    </div>
 
-<!-- Page 5: Caption 2 -->
-<div class="screen hidden gradientBg" id="page5">
-  <div id="captionText2"></div>
-</div>
+    <div class="screen" id="step3">
+        <h1 class="bold-2026">HAPPY NEW YEAR <br> 2026</h1>
+    </div>
 
-<!-- Music -->
-<audio id="music" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3">
-</audio>
+    <div class="screen" id="step4">
+        <h3 style="color: var(--primary); letter-spacing: 5px; margin-bottom: 15px;">WELCOME 2026</h3>
+        <p class="caption" id="wishMsg"></p>
+        <button class="btn" style="margin-top: 30px;" onclick="location.reload()">Explore Again ✨</button>
+    </div>
 
-<script>
-// Global
-let userName="";
+    <script>
+        function createFireflies() {
+            const container = document.getElementById('firefly-container');
+            for(let i=0; i<60; i++) {
+                let f = document.createElement('div');
+                f.className = 'firefly';
+                f.style.left = Math.random() * 100 + 'vw';
+                f.style.top = Math.random() * 100 + 'vh';
+                f.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                f.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(f);
+            }
+        }
 
-function start(){
-  userName=document.getElementById("name").value.trim();
-  if(!userName) return alert("Please enter your name 🙂");
-  document.getElementById("page1").classList.add("hidden");
-  startCountdown();
-}
+        function nextStep() {
+            const name = document.getElementById('userName').value;
+            if(!name) return alert("Please enter your name first! 🙂");
 
-// Countdown
-function startCountdown(){
-  const page2=document.getElementById("page2");
-  page2.classList.remove("hidden");
-  let n=10;
-  const countdown=document.getElementById("countdown");
-  countdown.innerText=n;
-  const timer=setInterval(()=>{
-    n--;
-    countdown.innerText=n;
-    if(n<=0){
-      clearInterval(timer);
-      page2.classList.add("hidden");
-      showWish();
-    }
-  },1000);
-}
+            // Play Music
+            const music = document.getElementById('bgMusic');
+            music.play().catch(e => console.log("Music blocked by browser."));
 
-// Page 3: Wish
-function showWish(){
-  const page3=document.getElementById("page3");
-  page3.classList.remove("hidden");
-  document.getElementById("music").play();
+            // Switch Screen
+            document.getElementById('step1').classList.remove('active');
+            document.getElementById('step2').classList.add('active');
 
-  const wishMsg=`🎆 HAPPY NEW YEAR 2026 ${userName}! 🎉`;
-  typeWriter("wishText",wishMsg,0,()=>{ 
-    spawnFireflies(30); 
-    setTimeout(showCaption1,3000);
-  });
-}
+            let count = 3;
+            const cd = document.getElementById('cdText');
+            cd.innerText = count;
+            
+            let timer = setInterval(() => {
+                count--;
+                cd.innerText = count;
+                if(count === 0) {
+                    clearInterval(timer);
+                    showBigReveal(name);
+                }
+            }, 1000);
+        }
 
-// Page 4: Caption 1
-function showCaption1(){
-  document.getElementById("page3").classList.add("hidden");
-  const page4=document.getElementById("page4");
-  page4.classList.remove("hidden");
-  const msg="🌟 Leave the past, embrace the future ✨";
-  typeWriter("captionText",msg,0,()=>{ spawnConfetti(40); setTimeout(showCaption2,4000); });
-}
+        function showBigReveal(name) {
+            createFireflies();
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step3').classList.add('active');
 
-// Page 5: Caption 2
-function showCaption2(){
-  document.getElementById("page4").classList.add("hidden");
-  const page5=document.getElementById("page5");
-  page5.classList.remove("hidden");
-  const msg="💖 May this year bring joy, love and endless success 🌈";
-  typeWriter("captionText2",msg,0,()=>{ spawnFireflies(50); });
-}
-
-// Typing Effect
-function typeWriter(id,text,i,callback){
-  const el=document.getElementById(id);
-  el.innerHTML="";
-  const interval=setInterval(()=>{
-    el.innerHTML+=text.charAt(i);
-    i++;
-    if(i>=text.length){
-      clearInterval(interval);
-      el.classList.remove("typing");
-      if(callback) callback();
-    }
-  },40);
-  el.classList.add("typing");
-}
-
-// Fireflies
-function spawnFireflies(num){
-  for(let i=0;i<num;i++){
-    const f=document.createElement("div");
-    f.className="firefly";
-    f.style.left=Math.random()*100+"vw";
-    f.style.top=Math.random()*100+"vh";
-    f.style.background=`hsl(${Math.random()*360},80%,70%)`;
-    document.body.appendChild(f);
-    setTimeout(()=>f.remove(),10000);
-  }
-}
-
-// Confetti
-function spawnConfetti(num){
-  for(let i=0;i<num;i++){
-    const c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.background=`hsl(${Math.random()*360},80%,60%)`;
-    c.style.animationDuration=(3+Math.random()*3)+"s";
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),4000);
-  }
-}
-</script>
+            // After 4 seconds, show final English caption
+            setTimeout(() => {
+                document.getElementById('step3').classList.remove('active');
+                document.getElementById('step4').classList.add('active');
+                document.getElementById('wishMsg').innerText = `Hey ${name}, may this year bring you endless joy, success, and beautiful moments. Let your dreams take flight like these fireflies! ✨`;
+            }, 4500);
+        }
+    </script>
 </body>
 </html>
