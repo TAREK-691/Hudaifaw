@@ -2,82 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heart Animation for Tarek</title>
+    <title>Original Heart Art</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
             background-color: black;
+            margin: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             flex-direction: column;
-            overflow: hidden;
-        }
-
-        h1 {
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
             color: white;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        h1 {
+            font-size: 50px;
             margin-bottom: 20px;
-            letter-spacing: 5px;
+            font-weight: bold;
         }
-
-        .heart-container {
-            position: relative;
-            width: 300px;
-            height: 300px;
-        }
-
-        /* হার্ট তৈরির মূল ডিজাইন */
-        .heart {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: red;
-            transform: rotate(-45deg);
-            box-shadow: 0 0 40px rgba(255, 0, 0, 0.7);
-            animation: beat 1.2s infinite;
-        }
-
-        .heart::before,
-        .heart::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: red;
-            border-radius: 50%;
-        }
-
-        .heart::before {
-            top: -50%;
-            left: 0;
-        }
-
-        .heart::after {
-            top: 0;
-            left: 50%;
-        }
-
-        /* স্পন্দন বা বিটিং অ্যানিমেশন */
-        @keyframes beat {
-            0% { transform: rotate(-45deg) scale(1); }
-            20% { transform: rotate(-45deg) scale(1.1); }
-            40% { transform: rotate(-45deg) scale(1); }
-            60% { transform: rotate(-45deg) scale(1.2); }
-            100% { transform: rotate(-45deg) scale(1); }
+        canvas {
+            /* ছবির সেই ফ্রেমের মতো লুক */
+            border: 2px solid #222;
         }
     </style>
 </head>
 <body>
 
     <h1>CONGRATS! 🎉</h1>
-    
-    <div class="heart-container">
-        <div class="heart"></div>
-    </div>
+    <canvas id="heartCanvas"></canvas>
 
+    <script>
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // ক্যানভাস সাইজ
+        canvas.width = 600;
+        canvas.height = 600;
+
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2 - 30; // একটু উপরে সেট করা
+        let t = 0;
+
+        function drawHeart() {
+            // হার্টের গাণিতিক সূত্র (Parametric Equation)
+            const x = 16 * Math.pow(Math.sin(t), 3);
+            const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+
+            // স্কেলিং (ছবির মতো বড় দেখানোর জন্য)
+            const scale = 15;
+            const targetX = centerX + x * scale;
+            const targetY = centerY + y * scale;
+
+            // ছবির মতো লাইন আর্ট তৈরি
+            ctx.beginPath();
+            ctx.strokeStyle = "rgba(255, 0, 0, 0.6)"; // লাল রঙের লাইন
+            ctx.lineWidth = 1;
+            ctx.moveTo(centerX, centerY); // সেন্টার থেকে শুরু
+            ctx.lineTo(targetX, targetY); // হার্টের বাউন্ডারিতে শেষ
+            ctx.stroke();
+
+            // ধীরে ধীরে ড্র করার জন্য
+            t += 0.02; 
+
+            if (t <= 2 * Math.PI) {
+                requestAnimationFrame(drawHeart);
+            }
+        }
+
+        // শুরুতে পুরো ক্যানভাস কালো করে দেওয়া
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        drawHeart();
+    </script>
 </body>
 </html>
