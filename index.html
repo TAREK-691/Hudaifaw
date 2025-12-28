@@ -1,174 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Life Journey</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Animation for Tarek</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            overflow: hidden;
+        }
 
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: "Poppins", sans-serif;
-}
-body{
-  background: radial-gradient(circle at top, #0f2027, #000);
-  color:#fff;
-  overflow:hidden;
-}
-.page{
-  display:none;
-  height:100vh;
-  width:100%;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  text-align:center;
-  animation:fade 1s ease;
-}
-.page.active{display:flex;}
+        h1 {
+            color: white;
+            font-family: Arial, sans-serif;
+            margin-bottom: 20px;
+            letter-spacing: 5px;
+        }
 
-@keyframes fade{
-  from{opacity:0; transform:scale(0.95)}
-  to{opacity:1; transform:scale(1)}
-}
+        .heart-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
 
-input,button{
-  padding:14px 18px;
-  margin:8px;
-  border:none;
-  border-radius:10px;
-  outline:none;
-  font-size:16px;
-}
-input{
-  width:260px;
-}
-button{
-  background:linear-gradient(45deg,#00f2fe,#4facfe);
-  color:#000;
-  font-weight:600;
-  cursor:pointer;
-}
-button:hover{opacity:.9}
+        /* হার্ট তৈরির মূল ডিজাইন */
+        .heart {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: red;
+            transform: rotate(-45deg);
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.7);
+            animation: beat 1.2s infinite;
+        }
 
-.card{
-  background:rgba(255,255,255,.08);
-  padding:30px;
-  border-radius:18px;
-  backdrop-filter: blur(10px);
-  box-shadow:0 0 40px rgba(0,255,255,.2);
-}
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: red;
+            border-radius: 50%;
+        }
 
-.big{
-  font-size:48px;
-  font-weight:800;
-  margin-bottom:15px;
-}
-.glow{
-  text-shadow:0 0 15px #00f2fe;
-}
+        .heart::before {
+            top: -50%;
+            left: 0;
+        }
 
-.firefly{
-  position:absolute;
-  width:4px;
-  height:4px;
-  background:#fff;
-  border-radius:50%;
-  animation:fly 6s linear infinite;
-  opacity:.7;
-}
-@keyframes fly{
-  0%{transform:translateY(100vh) translateX(0);opacity:0}
-  50%{opacity:1}
-  100%{transform:translateY(-10vh) translateX(200px);opacity:0}
-}
-</style>
+        .heart::after {
+            top: 0;
+            left: 50%;
+        }
+
+        /* স্পন্দন বা বিটিং অ্যানিমেশন */
+        @keyframes beat {
+            0% { transform: rotate(-45deg) scale(1); }
+            20% { transform: rotate(-45deg) scale(1.1); }
+            40% { transform: rotate(-45deg) scale(1); }
+            60% { transform: rotate(-45deg) scale(1.2); }
+            100% { transform: rotate(-45deg) scale(1); }
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- Page 1 -->
-<div class="page active" id="p1">
-  <div class="card">
-    <h1 class="big glow">Welcome</h1>
-    <input type="text" id="name" placeholder="Your Name">
-    <input type="date" id="dob">
-    <br>
-    <button onclick="next1()">Start My Journey</button>
-  </div>
-</div>
-
-<!-- Page 2 -->
-<div class="page" id="p2">
-  <div class="card">
-    <h1 class="big glow" id="username"></h1>
-    <p id="age"></p>
-    <p id="days"></p>
-    <br>
-    <button onclick="next(3)">Next</button>
-  </div>
-</div>
-
-<!-- Page 3 -->
-<div class="page" id="p3">
-  <h1 class="big glow">HAPPY NEW YEAR 2026 🎆</h1>
-  <p>This year can change everything.</p>
-  <br>
-  <button onclick="next(4)">Continue</button>
-</div>
-
-<!-- Page 4 -->
-<div class="page" id="p4">
-  <div class="card">
-    <h1 class="big glow">Your Dreams Matter</h1>
-    <p>🎓 Study • ✈️ Japan • 💻 Career</p>
-    <br>
-    <button onclick="next(5)">Final</button>
-  </div>
-</div>
-
-<!-- Page 5 -->
-<div class="page" id="p5">
-  <h1 class="big glow">Don’t waste your time.</h1>
-  <p>Start building your future today.</p>
-  <br>
-  <button onclick="location.reload()">Restart</button>
-</div>
-
-<script>
-function next(n){
-  document.querySelector(".active").classList.remove("active");
-  document.getElementById("p"+n).classList.add("active");
-}
-
-function next1(){
-  let name=document.getElementById("name").value;
-  let dob=new Date(document.getElementById("dob").value);
-  if(!name||!dob) return alert("Fill all fields");
-
-  let now=new Date();
-  let diff=now-dob;
-  let days=Math.floor(diff/(1000*60*60*24));
-  let age=Math.floor(days/365);
-
-  document.getElementById("username").innerText="Hello, "+name;
-  document.getElementById("age").innerText="Age: "+age+" years";
-  document.getElementById("days").innerText="Lived Days: "+days;
-
-  next(2);
-}
-
-// fireflies
-for(let i=0;i<25;i++){
-  let f=document.createElement("div");
-  f.className="firefly";
-  f.style.left=Math.random()*100+"vw";
-  f.style.animationDelay=Math.random()*6+"s";
-  document.body.appendChild(f);
-}
-</script>
+    <h1>CONGRATS! 🎉</h1>
+    
+    <div class="heart-container">
+        <div class="heart"></div>
+    </div>
 
 </body>
 </html>
