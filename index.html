@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* আপনার আগের স্টাইলগুলো ঠিক আছে */
 *{
   margin:0;
   padding:0;
@@ -56,6 +55,10 @@ input{
   margin-bottom:20px;
 }
 
+input::placeholder{
+  color:#aaa;
+}
+
 button{
   width:100%;
   padding:15px;
@@ -67,35 +70,47 @@ button{
   background:linear-gradient(45deg,#ff2d2d,#ff5555);
   color:black;
   box-shadow:0 0 20px red;
+  transition: 0.3s;
+}
+
+button:active{
+  transform:scale(0.95);
 }
 </style>
 </head>
+
 <body>
 
 <div class="container">
   <div class="title">NUMBER TO<br>FULL INFO</div>
 
   <div class="box">
-    <input type="text" id="phoneInput" placeholder="Enter phone number">
-    <button id="checkBtn">Check</button>
+    <input type="text" id="phoneNumber" placeholder="Enter phone number">
+    <button onclick="playVoice()">Check</button>
   </div>
 </div>
 
 <audio id="voice" preload="auto">
-  <source src="https://drive.google.com/uc?export=download&id=1E_N3rG1VLW_3MpIhKMnPgorl5m-BZZtK" type="audio/mpeg">
+  <source src="https://files.catbox.moe/eofaq7.mp4" type="audio/mp4">
 </audio>
 
 <script>
-document.getElementById("checkBtn").addEventListener("click", function() {
+function playVoice(){
   const audio = document.getElementById("voice");
-  
-  // অডিও প্লে করার চেষ্টা
+  const input = document.getElementById("phoneNumber").value;
+
+  if(input === ""){
+      alert("Please enter a number first!");
+      return;
+  }
+
+  // অডিও প্লে করার কমান্ড
   audio.currentTime = 0; 
   audio.play().catch(function(error) {
-    console.log("Audio play failed: ", error);
-    alert("অডিও লোড হতে পারেনি বা ব্রাউজার বাধা দিচ্ছে।");
+    console.log("Error playing audio: ", error);
+    alert("Browser is blocking audio. Please click anywhere on the page and try again.");
   });
-});
+}
 </script>
 
 </body>
