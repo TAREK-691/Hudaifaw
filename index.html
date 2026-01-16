@@ -1,117 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Number To Full Info</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Sumaiya</title>
+    <style>
+        body {
+            background-color: #ffeef2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
+        .card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 350px;
+            border: 5px solid #ffb6c1;
+        }
 
-body{
-  background:black;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  color:white;
-}
+        .kitty-img {
+            width: 150px;
+            margin-bottom: 20px;
+        }
 
-.container{
-  width:90%;
-  max-width:400px;
-  text-align:center;
-}
+        h1 {
+            color: #ff69b4;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
 
-.title{
-  font-size:36px;
-  font-weight:bold;
-  color:#ff2d2d;
-  text-shadow:0 0 15px red;
-  margin-bottom:30px;
-}
+        p {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.5;
+        }
 
-.box{
-  border:2px solid #ff2d2d;
-  border-radius:12px;
-  padding:25px;
-  box-shadow:0 0 25px rgba(255,0,0,0.4);
-}
+        .btn-container {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-around;
+            position: relative;
+        }
 
-input{
-  width:100%;
-  padding:15px;
-  border-radius:10px;
-  border:2px solid #ff2d2d;
-  background:black;
-  color:white;
-  font-size:16px;
-  outline:none;
-  margin-bottom:20px;
-}
+        button {
+            padding: 10px 25px;
+            font-size: 18px;
+            border-radius: 15px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-input::placeholder{
-  color:#aaa;
-}
+        #yesBtn {
+            background-color: #ff69b4;
+            color: white;
+        }
 
-button{
-  width:100%;
-  padding:15px;
-  border:none;
-  border-radius:10px;
-  font-size:18px;
-  font-weight:bold;
-  cursor:pointer;
-  background:linear-gradient(45deg,#ff2d2d,#ff5555);
-  color:black;
-  box-shadow:0 0 20px red;
-  transition: 0.3s;
-}
+        #noBtn {
+            background-color: #f0f0f0;
+            color: #888;
+            position: absolute;
+            left: 180px;
+        }
 
-button:active{
-  transform:scale(0.95);
-}
-</style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
-  <div class="title">NUMBER TO<br>FULL INFO</div>
+    <div class="card" id="mainCard">
+        <img src="https://i.pinimg.com/originals/f3/78/4e/f3784e723377f09320e816914561a35a.gif" alt="Hello Kitty" class="kitty-img">
+        <div id="content">
+            <h1>Hey, I have something for you 💖</h1>
+            <p>Don't forget I'm the one who loves you the most...</p>
+            <p><b>Will you be my madam jii? 💍</b></p>
+            
+            <div class="btn-container">
+                <button id="yesBtn" onclick="sayYes()">Yes ♡</button>
+                <button id="noBtn" onmouseover="moveButton()">No :(</button>
+            </div>
+        </div>
+    </div>
 
-  <div class="box">
-    <input type="text" id="phoneNumber" placeholder="Enter phone number">
-    <button onclick="playVoice()">Check</button>
-  </div>
-</div>
+    <script>
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+            noBtn.innerText = "No (Not allowed)";
+        }
 
-<audio id="voice" preload="auto">
-  <source src="https://files.catbox.moe/eofaq7.mp4" type="audio/mp4">
-</audio>
-
-<script>
-function playVoice(){
-  const audio = document.getElementById("voice");
-  const input = document.getElementById("phoneNumber").value;
-
-  if(input === ""){
-      alert("Please enter a number first!");
-      return;
-  }
-
-  // অডিও প্লে করার কমান্ড
-  audio.currentTime = 0; 
-  audio.play().catch(function(error) {
-    console.log("Error playing audio: ", error);
-    alert("Browser is blocking audio. Please click anywhere on the page and try again.");
-  });
-}
-</script>
-
+        function sayYes() {
+            document.getElementById('content').innerHTML = `
+                <h1 style="color: #ff1493;">Yayyy! I knew it! 😍</h1>
+                <p>I am already in love with the life we'll share. You are my forever home. ❤️</p>
+                <img src="https://media.tenor.com/gU_Pb_76Y6YAAAAi/cute-kawaii.gif" width="120px">
+            `;
+        }
+    </script>
 </body>
 </html>
