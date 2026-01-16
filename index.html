@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Sumaiya 💖</title>
+    <title>Special Surprise 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --pink-bg: #ffeef2;
-            --card-pink: #fff0f5;
-            --text-color: #555;
             --accent-pink: #ff69b4;
+            --text-dark: #333;
         }
 
         body {
@@ -19,171 +19,199 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-family: 'Poppins', sans-serif;
             overflow: hidden;
         }
 
-        .container {
+        .phone-frame {
             background: white;
-            width: 350px;
-            min-height: 500px;
-            border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            width: 360px;
+            height: 640px;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
             position: relative;
-            padding: 20px;
-            text-align: center;
-            border: 8px solid white;
+            overflow: hidden;
+            border: 10px solid #fff;
+        }
+
+        .slider {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            transition: all 0.5s ease;
+            width: 800%; /* 8 pages */
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .page {
-            display: none;
-            animation: fadeIn 0.8s ease;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            width: 12.5%; /* 100/8 */
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            box-sizing: border-box;
+            text-align: center;
         }
 
         .kitty-gif {
-            width: 140px;
-            margin-bottom: 20px;
+            width: 160px;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.05));
         }
 
-        h2 { color: var(--accent-pink); font-size: 20px; }
-        p { color: var(--text-color); font-size: 16px; line-height: 1.4; }
+        h2 {
+            color: var(--accent-pink);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
 
-        /* Multi-color reasons styling */
-        .reason {
-            padding: 10px;
+        p {
+            color: var(--text-dark);
+            font-size: 17px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        b {
+            color: #d81b60;
+            font-weight: 700;
+        }
+
+        .reason-box {
+            width: 100%;
+            padding: 12px 15px;
             margin: 8px 0;
-            border-radius: 12px;
+            border-radius: 15px;
             font-size: 14px;
             text-align: left;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
         .btn-next {
-            background: #ffb6c1;
+            background: var(--accent-pink);
             color: white;
             border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 16px;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+            transition: 0.3s;
+        }
+
+        .btn-next:active {
+            transform: scale(0.95);
         }
 
         .no-btn {
-            position: absolute;
             background: #eee;
             border: none;
-            padding: 8px 15px;
-            border-radius: 10px;
-            cursor: pointer;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: #888;
+            transition: 0.2s;
         }
+
+        /* Rainbow items */
+        .pink { background: #ffe4e1; color: #b71c1c; }
+        .blue { background: #e0f7fa; color: #006064; }
+        .yellow { background: #fff9c4; color: #f57f17; }
+        .green { background: #e8f5e9; color: #1b5e20; }
+        .purple { background: #f3e5f5; color: #4a148c; }
+
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="page active" id="p1">
-        <h2>Hey, I have something for you</h2>
-        <img src="https://media.tenor.com/7S8_hK-y_pQAAAAi/hello-kitty.gif" class="kitty-gif">
-        <p>Don't forget I'm the one who loves you the most...</p>
-        <p>and today, I want to ask you something a <span style="color:var(--accent-pink)">little extra special</span>. 💞</p>
-        <button class="btn-next" onclick="nextPage(2)">OKAY 💗</button>
-    </div>
-
-    <div class="page" id="p2">
-        <img src="https://media.tenor.com/T09qW6S_I60AAAAi/hello-kitty-flower.gif" class="kitty-gif">
-        <p>Every silly laugh, every late-night talk, every little <b>moment with you</b> feels like magic.</p>
-        <p>My heart has quietly decided that its <b>forever home</b> is you. ✨</p>
-        <button class="btn-next" onclick="nextPage(3)">Next, baby ➔</button>
-    </div>
-
-    <div class="page" id="p3">
-        <div style="font-size: 40px;">🌈</div>
-        <h3>Why I'm so in love with you</h3>
-        <div class="reason" style="background:#ffe4e1">💖 Because your smile is the first thing my heart looks for every day.</div>
-        <div class="reason" style="background:#e0f7fa">🕒 With you, even simple moments feel like my favourite memories already.</div>
-        <div class="reason" style="background:#fff9c4">✏️ You're my safe place, my comfort zone, and my favourite "it's okay, I'm here."</div>
-        <div class="reason" style="background:#e8f5e9">✨ There's no one else like you, and loving you feels like the best decision I ever made.</div>
-        <button class="btn-next" onclick="nextPage(4)">Next page ➔</button>
-    </div>
-
-    <div class="page" id="p4">
-        <img src="https://media.tenor.com/gU_Pb_76Y6YAAAAi/cute-kawaii.gif" class="kitty-gif">
-        <p>For the girl who will one day be my wife — this is a tiny page from our future love story. ♡</p>
-        <div style="background:#f3e5f5; padding:10px; border-radius:15px; color:#7b1fa2; font-weight:bold">Awww myy kuchupuchu</div>
-        <ul style="text-align:left; font-size:13px; list-style:none; padding:0">
-            <li style="margin:5px 0">🌸 I am already in love with the life we'll share.</li>
-            <li style="margin:5px 0">🌸 I am ready to hold your hand through every dream.</li>
-            <li style="margin:5px 0">🌸 I am endlessly grateful that my heart chose you.</li>
-        </ul>
-        <button class="btn-next" onclick="nextPage(5)">Next ➔</button>
-    </div>
-
-    <div class="page" id="p5">
-        <div style="font-size: 40px;">🌈</div>
-        <p>Your smile is my favourite place to be. 💞</p>
-        <p>You make even ordinary days feel like soft, pastel magic.</p>
-        <p>I love how you care, listen, and always make me feel safe.</p>
-        <p>And mostly... because you're you, perfectly and beautifully you. ✨</p>
-        <button class="btn-next" onclick="nextPage(6)">Almost there... ➔</button>
-    </div>
-
-    <div class="page" id="p6">
-        <img src="https://media.tenor.com/D_68-G0Y2mMAAAAi/hello-kitty-love.gif" class="kitty-gif">
-        <p>So here I am... a little nervous, a lot in love, asking the most important question my heart:</p>
-        <p>Will you let me be <b>your always, your safe place, your forever?</b> 💍💖</p>
-        <button class="btn-next" onclick="nextPage(7)">See what I made for you 💝</button>
-    </div>
-
-    <div class="page" id="p7">
-        <img src="https://media.tenor.com/vH_fQpY-GqEAAAAi/hello-kitty-wink.gif" class="kitty-gif">
-        <h2 style="font-family: 'Courier New', Courier, monospace;">will you be my madam jii</h2>
-        <div style="display:flex; justify-content:center; gap:20px; margin-top:30px">
-            <button class="btn-next" onclick="nextPage(8)" style="background:#ff69b4">yes ♡</button>
-            <button class="no-btn" id="noBtn" onmouseover="moveNo()">no :(</button>
+<div class="phone-frame">
+    <div class="slider" id="slider">
+        
+        <div class="page">
+            <h2>Hey, I have something for you</h2>
+            <img src="https://media.tenor.com/7S8_hK-y_pQAAAAi/hello-kitty.gif" class="kitty-gif">
+            <p>Don't forget I'm the one who loves you the most...</p>
+            <p>Today, I want to ask you something a <b>little extra special</b>. 💞</p>
+            <button class="btn-next" onclick="moveSlide(1)">OKAY 💗</button>
         </div>
-    </div>
 
-    <div class="page" id="p8">
-        <img src="https://media.tenor.com/076C56S_mS0AAAAi/hello-kitty-excited.gif" class="kitty-gif">
-        <h1>I LOVE YOU! ❤️</h1>
-        <p>Thank you for saying YES, Sumaiya!</p>
-        <p>You've made me the happiest person ever! 🎀</p>
+        <div class="page">
+            <img src="https://media.tenor.com/T09qW6S_I60AAAAi/hello-kitty-flower.gif" class="kitty-gif">
+            <p>Every silly laugh, every late-night talk, every little <b>moment with you</b> feels like magic.</p>
+            <p>My heart has quietly decided that its <b>forever home</b> is you. ✨</p>
+            <button class="btn-next" onclick="moveSlide(2)">Next, baby ➔</button>
+        </div>
+
+        <div class="page">
+            <div style="font-size: 45px; margin-bottom: 10px;">🌈</div>
+            <h2 style="font-size: 20px;">Why I'm so in love with you</h2>
+            <div class="reason-box pink">💖 Your smile is the first thing my heart looks for.</div>
+            <div class="reason-box blue">🕒 Simple moments feel like favourite memories.</div>
+            <div class="reason-box yellow">🛡️ You're my safe place and my comfort zone.</div>
+            <div class="reason-box green">✨ Loving you is the best decision I ever made.</div>
+            <button class="btn-next" onclick="moveSlide(3)">Next page ➔</button>
+        </div>
+
+        <div class="page">
+            <img src="https://media.tenor.com/gU_Pb_76Y6YAAAAi/cute-kawaii.gif" class="kitty-gif">
+            <p>For the girl who will one day be my wife — a tiny page from our <b>future love story</b>. ♡</p>
+            <div class="reason-box purple" style="text-align: center;">Awww myy kuchupuchu</div>
+            <p style="font-size: 14px;">I'm already in love with the life we'll share. I'm ready to hold your hand forever. 🌸</p>
+            <button class="btn-next" onclick="moveSlide(4)">Keep going ➔</button>
+        </div>
+
+        <div class="page">
+            <div style="font-size: 45px; margin-bottom: 10px;">🌈</div>
+            <div class="reason-box pink">💕 Your smile is my favourite place to be.</div>
+            <div class="reason-box blue">☁️ You make ordinary days feel like magic.</div>
+            <div class="reason-box yellow">👂 I love how you care and always listen.</div>
+            <div class="reason-box green">🌟 Because you're perfectly you.</div>
+            <button class="btn-next" onclick="moveSlide(5)">Almost there ➔</button>
+        </div>
+
+        <div class="page">
+            <img src="https://media.tenor.com/D_68-G0Y2mMAAAAi/hello-kitty-love.gif" class="kitty-gif">
+            <p>So here I am... a little nervous, a lot in love...</p>
+            <p>Will you let me be <b>your always, your safe place, your forever?</b> 💍</p>
+            <button class="btn-next" onclick="moveSlide(6)">See the surprise 💝</button>
+        </div>
+
+        <div class="page" id="lastActionPage">
+            <img src="https://media.tenor.com/vH_fQpY-GqEAAAAi/hello-kitty-wink.gif" class="kitty-gif">
+            <h2 style="font-family: 'Courier New', monospace; color: #ff1493;">will you be my madam jii</h2>
+            <div style="display:flex; justify-content:center; gap:20px; margin-top:20px;">
+                <button class="btn-next" style="margin-top:0;" onclick="moveSlide(7)">yes ♡</button>
+                <button class="no-btn" id="noBtn" onmouseover="runAway()">no :(</button>
+            </div>
+        </div>
+
+        <div class="page">
+            <img src="https://media.tenor.com/076C56S_mS0AAAAi/hello-kitty-excited.gif" class="kitty-gif">
+            <h2 style="font-size: 30px;">YAYYY! ❤️</h2>
+            <p>Thank you for saying <b>YES!</b></p>
+            <p>You've made me the happiest person ever, <b>Madam jii!</b> 🎀✨</p>
+        </div>
+
     </div>
 </div>
 
 <script>
-    function nextPage(pageNumber) {
-        // Hide all pages
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        // Show the requested page
-        document.getElementById('p' + pageNumber).classList.add('active');
+    function moveSlide(index) {
+        const slider = document.getElementById('slider');
+        slider.style.transform = `translateX(-${index * 12.5}%)`;
     }
 
-    function moveNo() {
+    function runAway() {
         const btn = document.getElementById('noBtn');
-        const container = document.querySelector('.container');
-        
-        // Random position within the container
-        const newX = Math.random() * (container.clientWidth - btn.clientWidth);
-        const newY = Math.random() * (container.clientHeight - btn.clientHeight);
-        
-        btn.style.left = newX + 'px';
-        btn.style.top = newY + 'px';
-        btn.innerText = "no (not allowed)";
+        const x = Math.random() * 200 - 100;
+        const y = Math.random() * 300 - 150;
+        btn.style.transform = `translate(${x}px, ${y}px)`;
+        btn.innerText = "not allowed 😜";
     }
 </script>
 
