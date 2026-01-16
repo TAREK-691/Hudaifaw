@@ -3,81 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heart Animation for Tarek</title>
+    <title>For My Sumaiya</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            background-color: black;
+            background-color: #ffeef2;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            flex-direction: column;
-            overflow: hidden;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 350px;
+            border: 5px solid #ffb6c1;
+        }
+
+        .kitty-img {
+            width: 150px;
+            margin-bottom: 20px;
         }
 
         h1 {
-            color: white;
-            font-family: Arial, sans-serif;
-            margin-bottom: 20px;
-            letter-spacing: 5px;
+            color: #ff69b4;
+            font-size: 22px;
+            margin-bottom: 15px;
         }
 
-        .heart-container {
+        p {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .btn-container {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-around;
             position: relative;
-            width: 300px;
-            height: 300px;
         }
 
-        /* হার্ট তৈরির মূল ডিজাইন */
-        .heart {
+        button {
+            padding: 10px 25px;
+            font-size: 18px;
+            border-radius: 15px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #yesBtn {
+            background-color: #ff69b4;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #f0f0f0;
+            color: #888;
             position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: red;
-            transform: rotate(-45deg);
-            box-shadow: 0 0 40px rgba(255, 0, 0, 0.7);
-            animation: beat 1.2s infinite;
+            left: 180px;
         }
 
-        .heart::before,
-        .heart::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: red;
-            border-radius: 50%;
-        }
-
-        .heart::before {
-            top: -50%;
-            left: 0;
-        }
-
-        .heart::after {
-            top: 0;
-            left: 50%;
-        }
-
-        /* স্পন্দন বা বিটিং অ্যানিমেশন */
-        @keyframes beat {
-            0% { transform: rotate(-45deg) scale(1); }
-            20% { transform: rotate(-45deg) scale(1.1); }
-            40% { transform: rotate(-45deg) scale(1); }
-            60% { transform: rotate(-45deg) scale(1.2); }
-            100% { transform: rotate(-45deg) scale(1); }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
 
-    <h1>CONGRATS! 🎉</h1>
-    
-    <div class="heart-container">
-        <div class="heart"></div>
+    <div class="card" id="mainCard">
+        <img src="https://i.pinimg.com/originals/f3/78/4e/f3784e723377f09320e816914561a35a.gif" alt="Hello Kitty" class="kitty-img">
+        <div id="content">
+            <h1>Hey, I have something for you 💖</h1>
+            <p>Don't forget I'm the one who loves you the most...</p>
+            <p><b>Will you be my madam jii? 💍</b></p>
+            
+            <div class="btn-container">
+                <button id="yesBtn" onclick="sayYes()">Yes ♡</button>
+                <button id="noBtn" onmouseover="moveButton()">No :(</button>
+            </div>
+        </div>
     </div>
 
+    <script>
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+            noBtn.innerText = "No (Not allowed)";
+        }
+
+        function sayYes() {
+            document.getElementById('content').innerHTML = `
+                <h1 style="color: #ff1493;">Yayyy! I knew it! 😍</h1>
+                <p>I am already in love with the life we'll share. You are my forever home. ❤️</p>
+                <img src="https://media.tenor.com/gU_Pb_76Y6YAAAAi/cute-kawaii.gif" width="120px">
+            `;
+        }
+    </script>
 </body>
 </html>
